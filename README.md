@@ -21,35 +21,40 @@ A clean and modern boilerplate for building scalable and maintainable Node.js ap
 ## Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/node-express-typescript-starter.git
-   cd node-express-typescript-starter
+    ```bash
+    git clone https://github.com/your-username/node-express-typescript-starter.git
+    cd node-express-typescript-starter
+    ```
 2. Install dependencies:
     ```bash
     npm install
+    ```
 3. Setting the `.env` file
 4. Run development with auto restart when file changing
     ```bash
     npm run dev
+    ```
 5. To run on production
     ```
     npm run build
     npm run start
+    ```
 
 ## Development Workflow
 
 ### Code Quality
+
 - **EsLint** is configured with rules for TypeScript and JavaScript to enforce consistent coding standards.
 - **Prettier** ensures uniform formatting.
+
 ### Pre-Commit Hooks
+
 - **EsLint** is configured with rules for TypeScript and JavaScript to enforce consistent coding standards.
-- **Husky** runs the following checks before each commit:
-    - **Linting** (`npm run lint`)
-    - **Building** (`npm run build`)
-    - **Running tests** (`npm test`)
-This ensures that only high-quality, tested code is committed.
+- **Husky** runs the following checks before each commit: - **Linting** (`npm run lint`) - **Building** (`npm run build`) - **Running tests** (`npm test`)
+  This ensures that only high-quality, tested code is committed.
 
 ## Folder Structure
+
 ```
 node-express-typescript-starter/
 ├── src/
@@ -91,27 +96,28 @@ node-express-typescript-starter/
 │   │   │   │   ├── request.ts
 │   │   │   │   └── response.ts
 │   │   └── index.ts        # Main entry to dynamically register routes
+│   ├── integrations/       # Third-party service integrations
+│   │   ├── aws-s3.ts       # AWS S3 integration
+│   │   ├── twilio.ts       # Twilio integration
+│   │   └── ...other.ts
 │   ├── shared/             # Shared modules across the application
 │   │   ├── enums/          # Enumerations
 │   │   ├── interface/      # Global TypeScript interfaces
 │   │   ├── swagger/        # Swagger configuration (auto-registers endpoints)
 │   │   ├── validators/     # Input validation and authorization logic
 │   │   └── config.ts       # Centralized application configuration
-│   ├── integrations/       # Third-party service integrations
-│   │   ├── aws-s3.ts       # AWS S3 integration
-│   │   ├── twilio.ts       # Twilio integration
 │   ├── utils/              # Utility functions and helpers
 │   └── app.ts              # Main application entry point
 ├── tests/                  # Unit and integration tests
-│   ├── unit/               # Unit tests
-│   │    ├── bl/            # Tests for business logic
-│   │    ├── core/          # Tests for shared modules
-│   │    ├── dal/           # Tests for repositories and schedulers
-│   │    ├── endpoints/     # Tests for API endpoints
-│   │    └── utils/         # Tests for utility functions
-│   └── integration/        # Integration tests
-│      ├── endpoints/       # End-to-end tests for APIs
-│      └── integrations/    # Tests for external services
+│   ├── integration/        # Integration tests
+│   │  	 ├── endpoints/       # End-to-end tests for APIs
+│   │ 	 └── integrations/    # Tests for external services
+│   └── unit/               # Unit tests
+│        ├── bl/            # Tests for business logic
+│        ├── core/          # Tests for shared modules
+│        ├── dal/           # Tests for repositories and schedulers
+│        ├── endpoints/     # Tests for API endpoints
+│        └── utils/         # Tests for utility functions
 ├── .eslintrc.js            # ESLint configuration
 ├── .prettierrc             # Prettier configuration
 ├── tsconfig.json           # TypeScript configuration
@@ -120,8 +126,10 @@ node-express-typescript-starter/
 ```
 
 ## Requirements
+
 - Node.js >= 22.13
 - npm >= 10
 
 ## Contributing
+
 Contributions are welcome! Please see [CONTRIBUTING.md](/CONTRIBUTING.md) for details.
