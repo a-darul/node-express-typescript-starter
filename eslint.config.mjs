@@ -40,19 +40,7 @@ export default [
                     format: [`camelCase`],
                 },
                 {
-                    selector: `class`,
-                    format: [`PascalCase`],
-                },
-                {
-                    selector: `interface`,
-                    format: [`PascalCase`],
-                },
-                {
-                    selector: `typeAlias`,
-                    format: [`PascalCase`],
-                },
-                {
-                    selector: `enum`,
+                    selector: [`class`, `interface`, `typeAlias`, `enum`],
                     format: [`PascalCase`],
                 },
                 {
@@ -77,6 +65,7 @@ export default [
 
             // General rules
             'no-console': `warn`,
+            camelcase: `error`,
             quotes: [`error`, `backtick`],
         },
     },
