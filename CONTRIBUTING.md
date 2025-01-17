@@ -131,6 +131,10 @@ Import and exports are sorted alphabetically. (Prefers also sort functions or va
 
 Use EsLint with Prettier, the config can be found at [eslint.config.mjs](/eslint.config.mjs)
 
+**For Visual Studio Code User**
+
+Install extension of [ESLint](dbaeumer.vscode-eslint) and [Prettier](esbenp.prettier-vscode), to automate the lint and format
+
 ---
 
 ### 5. Git Workflow
@@ -265,5 +269,52 @@ We follow a structured Git branching strategy to ensure smooth collaboration and
     - Install `swagger-ui-express`
     - Set up a swagger config at `src/shared/swagger`
     - Generate html for swagger-ui from `request.ts` and `response.ts` at `endpoints` folder
+
+---
+
+### 8. Database
+
+1. Unique Identifiers
+    - Every table in the database must include a unique identifier, such as `userId`, `postId`, etc.
+    - These identifiers are generated using the Snowflake technique implemented in as postgresql function shows at [`snowflake migration`](/src/data-access/migrations/20250113100606_create-snowflake-function.js).
+    - **What is the Snowflake Technique?**
+        - A method for generating unique, sortable IDs based on, inspired by twitter:
+            - **Timestamp:** Ensures uniqueness across time.
+            - **Machine Identifier:** Differentiates servers generating IDs.
+            - **Sequence Number:** Resolves collisions within the same millisecond.
+        - The generated IDs are globally unique, ordered by creation time, and efficient for storage and indexing.
+2. Migrations and Seeders
+    - **Migrations:**
+        - Define the schema and structure of your database.
+        - Located in src/data-access/migrations/.
+        - Automatically applied when the project starts, ensuring that the database is always synchronized with the application code.
+    - **Seeders:**
+        - Populate the database with essential data.
+        - Development seeders are placed in `src/data-access/seeds-dev/`, and production seeders in `src/data-access/seeds-prod/`.
+        - Seeders also run automatically at project startup to ensure that necessary data is initialized.
+3. Repository Structure and SQL Management
+    - Repository Files:
+        - Each repository file (e.g., user.ts) in src/data-access/repositories/ contains logic for CRUD operations and other business-specific queries.
+        - All database interactions use Knex.js but leverage raw queries exclusively.
+    - **Raw Query Separation:**
+        - Raw SQL queries are stored in separate .sql files under `src/data-access/repositories/queries/` for better organization and maintainability. easy debugging copying into PostgreSQL editor.
+4. Knex.js Usage Philosophy
+    - The project uses `knex.raw()` exclusively, separating query logic into `.sql` files. This provides:
+        - Better readability for complex queries.
+        - Easier query tuning and testing directly in SQL.
+        - Improved team collaboration for SQL-focused development.
+    - It adopts a hybrid approach, where:
+        - Simple queries use Knex.js functions.
+        - Complex queries use `knex.raw()` and `.sql` files.
+5. Linter and Formatter
+    - _No formatter and linter_ applied for this starter yet.
+    - It could [`SQLFluff`](https://docs.sqlfluff.com/en/stable/gettingstarted.html) to used
+    - It could use `sql-formatter` with options
+        ```
+        {
+            language: 'postgresql', keywordCase: 'upper', functionCase: 'upper'
+        }
+        ```
+6. Pagination
 
 ---

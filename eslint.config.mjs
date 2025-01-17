@@ -3,8 +3,11 @@ import tsPlugin from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
+import eslintPluginSortExports from 'eslint-plugin-sort-exports';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
+
+import customSortExportDefault from './src/shared/custom-eslint-rules/sort-export-default.js';
 
 /** @type {import('eslint').Linter.FlatConfig[]} */
 export default [
@@ -14,42 +17,57 @@ export default [
     {
         files: [`**/*.{js,mjs,cjs,ts}`],
         languageOptions: {
+            globals: globals.node,
             parser: tsParser,
             parserOptions: {
                 projectService: true,
                 tsconfigRootDir: import.meta.dirname,
             },
-            globals: globals.node,
         },
         plugins: {
             '@typescript-eslint': tsPlugin,
-            unicorn: eslintPluginUnicorn,
+            'custom-sort-export-default': {
+                rules: {
+                    'sort-export-default': customSortExportDefault,
+                },
+            },
             'simple-import-sort': eslintPluginSimpleImportSort,
+            'sort-exports': eslintPluginSortExports,
+            unicorn: eslintPluginUnicorn,
         },
         rules: {
-            // Naming conventions
             '@typescript-eslint/naming-convention': [
                 `error`,
                 {
-                    selector: `variable`,
                     format: [`camelCase`, `UPPER_CASE`],
                     leadingUnderscore: `allow`,
+                    selector: `variable`,
                 },
                 {
-                    selector: `function`,
                     format: [`camelCase`],
+                    selector: `function`,
                 },
                 {
-                    selector: [`class`, `interface`, `typeAlias`, `enum`],
                     format: [`PascalCase`],
+                    selector: [`class`, `interface`, `typeAlias`, `enum`],
                 },
                 {
-                    selector: `enumMember`,
                     format: [`UPPER_CASE`],
+                    selector: `enumMember`,
                 },
             ],
-
-            // File naming conventions
+            camelcase: `error`,
+            'no-console': `warn`,
+            quotes: [`error`, `backtick`],
+            'simple-import-sort/exports': `error`,
+            'simple-import-sort/imports': `error`,
+            'sort-exports/sort-exports': [
+                `error`,
+                {
+                    sortDir: `asc`,
+                },
+            ],
+            'custom-sort-export-default/sort-export-default': 'error',
             'unicorn/filename-case': [
                 `error`,
                 {
@@ -58,15 +76,6 @@ export default [
                     },
                 },
             ],
-
-            // Sorting rules
-            'simple-import-sort/imports': `error`,
-            'simple-import-sort/exports': `error`,
-
-            // General rules
-            'no-console': `warn`,
-            camelcase: `error`,
-            quotes: [`error`, `backtick`],
         },
     },
     {
