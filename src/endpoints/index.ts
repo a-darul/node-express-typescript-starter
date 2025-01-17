@@ -40,7 +40,6 @@ const load = () => {
 
     const routes: IRoute[] = [];
     paths.forEach((filePath) => {
-        console.log(filePath);
         const route: IConfig = require(filePath).config;
         if (!route) {
             throw new GenericError(`Route cannot be null/undefined: ${filePath}`, ErrorCode.ROUTE_UNDEFINED);

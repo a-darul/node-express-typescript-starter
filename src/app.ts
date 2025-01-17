@@ -7,6 +7,7 @@ import { initDatabase, initializeTypesCast, runMigrations, runSeeds } from './da
 import { loadRoutes } from './endpoints';
 import { initFirebaseAdmin } from './integrations/firebase-admin';
 import config from './shared/config';
+import { configureSwaggerDocs } from './shared/swagger';
 import { getRandomUuid } from './utils/crypto';
 import { logger } from './utils/logger';
 
@@ -45,6 +46,8 @@ async function run() {
     app.use(cors(options));
     app.use(helmet());
     app.use(limiter);
+
+    configureSwaggerDocs(app);
 
     app.use(express.json({ limit: `50mb` }));
 
